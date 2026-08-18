@@ -16,6 +16,8 @@ FetchContent_MakeAvailable(Catch2)
 enable_testing()
 
 # Register each set/challenge as it's built
+add_subdirectory(common)
 add_subdirectory(set1/challenge1)
+add_subdirectory(set1/challenge2)
 
 # Main executable for this challenge
