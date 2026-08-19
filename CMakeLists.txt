@@ -19,5 +19,6 @@ enable_testing()
 add_subdirectory(common)
 add_subdirectory(set1/challenge1)
 add_subdirectory(set1/challenge2)
+add_subdirectory(set1/challenge3)
 
 # Main executable for this challenge
