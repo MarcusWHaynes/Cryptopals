@@ -1,5 +1,5 @@
 #include "fixed_xor.hpp"
-#include "../../../common/bytes.hpp"
+#include "bytes.hpp"
 #include <iostream>
 
 int main()
