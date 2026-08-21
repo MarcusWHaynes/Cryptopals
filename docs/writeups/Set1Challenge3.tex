@@ -1,0 +1,44 @@
+\documentclass{article}
+\usepackage{graphicx} 
+\usepackage{listings}
+
+\title{Cyrptopals Set 1 Challenge 3}
+\author{Marcus Haynes}
+\date{August 2026}
+
+\begin{document}
+
+
+
+\maketitle
+
+\section{The problem}
+This challenge asked to decrypt a message that had been xor'd with a secret key. This key is a single character (0-255) byte.\\
+\\
+Brute force is a viable option here as the key is only 256 possible combinations, and the challenge states its the same character repeated. Thus making the key space 256 possible combinations.\\
+\\
+You can look through the 256 possible combinations, but to make it more efficient you can use frequency analysis to find the correct combination. This comes about as each letter in the english alphabet has a probability of appearing in a given sentence/paragraph.\\
+\\
+Using this we can use Chi-squared to find whether the frequencies we observe are significantly different from the frequencies we would expect. \[
+\chi^2 = \sum_{i=1}^{26} \frac{(O_i - E_i)^2}{E_i}
+\]
+The division by expected count means a deviation on a rare letter contributes disproportionately more to the score than the same absolute deviation on a common letter.
+\\
+In the code \texttt{english\_freq} is the lookup table of frequencies relating to each letter alphabetically I.e A = 0.08167 e.c.t.\\ \texttt{observed} counts actual letter occurrences in the candidate. \\
+\texttt{total} is the count of alphabetic characters only. If we included other character this would skew the expected frequencies.
+the early \begin{lstlisting}[language=C++]
+if (total == 0) return 1e9;
+\end{lstlisting}
+this handles the edge case where a candidate has zero letters at all (pure garbage), assigning it a deliberately terrible score so it's never mistakenly selected as the best match.  
+
+\subsection{Results}
+Running the cracker against the given ciphertext recovers key \texttt{0x58}
+(`X'), decrypting to:
+\begin{quote}
+Cooking MC's like a pound of bacon
+\end{quote}
+\subsection{Limitations}
+The main limitation of this is the fact that most ciphertext are short and have few characters, which can effect the usefulness as frequencies match better for longer texts.\\
+Non-alphanumeric texts would also confuse this too.
+
+\end{document}
